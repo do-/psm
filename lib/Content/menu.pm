@@ -24,6 +24,10 @@ sub select_menu_for_admin {
 					name  => 'voc_ages',
 					label => 'Возрастные категории',
 				},
+				{
+					name  => 'voc_res_types',
+					label => 'Типы ресурсов',
+				},
 			],
 		},
 		{
