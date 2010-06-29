@@ -40,18 +40,25 @@ EOS
 
 sub get_item_of_users {
 
-	my $item = sql_select_hash ("users");
+	my $data = sql_select_hash ("users");
 	
-	$_REQUEST {__read_only} ||= !($_REQUEST {__edit} || $item -> {fake} > 0);
+	$_REQUEST {__read_only} ||= !($_REQUEST {__edit} || $data -> {fake} > 0);
+	
+	sql ($data, options => [], [users_options => [
 
-	add_vocabularies ($item, 'roles');
+		[id_user => $data -> {id}],
 
-	$item -> {path} = [
-		{type => 'users', name => 'Пользователи'},
-		{type => 'users', name => $item -> {label}, id => $item -> {id}},
-	];
+	]]);
+	
+	foreach my $i (@{$data -> {options}}) {
+	
+		$i -> {users_option} -> {id} or next;
 		
-	return $item;
+		push @{$data -> {users_options}}, $i -> {id};
+	
+	}
+		
+	return $data;
 	
 }
 
@@ -83,6 +90,19 @@ sub do_update_users {
 	}
 	
 	do_update_DEFAULT ();
+	
+	wish (table_data =>
+	
+		[map {{	fake => 0, id_option => $_ }} get_ids ('users_options')], {
+		
+			table   => 'users_options',
+			root    => {id_user => $_REQUEST {id}},
+			key     => 'id_option',
+			delayed => 1,
+			
+		}
+		
+	);
 
 }
 

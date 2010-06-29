@@ -10,6 +10,11 @@ sub draw_item_of_users {
 	
 		right_buttons => [ del ($data) ],
 	
+		path => [
+			{type => 'users', name => 'Пользователи'},
+			{type => 'users', name => $data -> {label}, id => $data -> {id}},
+		],
+
 	}, $data,
 		[
 			{
@@ -18,17 +23,23 @@ sub draw_item_of_users {
 			},
 			{
 				name  => 'login',
-				label => '&login',
+				label => '&Login',
 			},
 			{
 				name  => 'password',
-				label => 'парол&ь',
+				label => 'Парол&ь',
 				type  => 'password',
 			},
 			{
 				name  => 'password2',
-				label => 'повтор пароля',
+				label => 'Повтор пароля',
 				type  => 'password',
+			},
+			{
+				name  => 'users_options',
+				label => 'Опции',
+				type  => 'checkboxes',
+				values => $data -> {options},
 			},
 		]
 	)
