@@ -58,29 +58,32 @@ sub get_item_of_users {
 ################################################################################
 
 sub do_update_users {
+
+	$_REQUEST {_id_role} = 1;
+
+	$_REQUEST {_label} or die "#_label#:Вы забыли ввести ФИО";
+
+	$_REQUEST {_login} or die "#_login#:Вы забыли ввести login";
 	
-	sql_do_update ('users', [qw(f i o label login id_role)]);
-
-	$_REQUEST {_password} and sql_do ("UPDATE users SET password=PASSWORD(?) WHERE id=?", $_REQUEST {_password}, $_REQUEST {id});
-
-}
-
-################################################################################
-
-sub validate_update_users {
-
-	$_REQUEST {_f} =~ /^[А-ЯЁ][а-яё]+$/ or return "#_f#:Некорректная фамилия";
-	$_REQUEST {_i} =~ /^[А-ЯЁ][а-яё]+$/ or return "#_i#:Некорректное имя";
-	$_REQUEST {_o} =~ /^[А-ЯЁ][а-яё]*[ач]$/ or return "#_o#:Некорректное отчество";
-
-	$_REQUEST {_label} = $_REQUEST {_f} . ' ' . $_REQUEST {_i} . ' ' . $_REQUEST {_o};
-
-	$_REQUEST {_id_role} or return "#_id_role#:Вы забыли указать роль";	
-
-	vld_unique ('users', {field => 'login'}) or return "#_login#:Login '$_REQUEST{_login}' уже занят";
+	vld_unique ('users', {
+		field => 'login',
+	}) or die "#_login#:этот login уже занят";
 	
-	undef;
+	if ($_REQUEST {_password}) {
 	
+		$_REQUEST {_password} eq $_REQUEST {_password2} or die "#_password2#:пароль не сходится";
+	
+		$_REQUEST {_password} = sql_select_scalar ('SELECT PASSWORD(?)', $_REQUEST {_password});
+	
+	}
+	else {
+	
+		delete $_REQUEST {_password};
+	
+	}
+	
+	do_update_DEFAULT ();
+
 }
 
 ################################################################################

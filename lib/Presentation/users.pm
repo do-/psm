@@ -4,37 +4,20 @@ sub draw_item_of_users {
 
 	my ($data) = @_;	
 	
+	$_REQUEST {__focused_input} = '_label';
+	
 	draw_form ({
 	
 		right_buttons => [ del ($data) ],
 	
 	}, $data,
 		[
-			[
-				{
-					name  => 'f',
-					label => 'Ôàìèëèÿ',
-					size  => 30,
-				},
-				{
-					name  => 'i',
-					label => 'Èìÿ',
-					size  => 30,
-				},
-				{
-					name  => 'o',
-					label => 'Îò÷åñòâî',
-					size  => 30,
-				},
-			],
 			{
 				name  => 'label',
 				label => 'ÔÈÎ',
-				type  => 'static',
 			},
 			{
 				name  => 'login',
-				mandatory  => 1,
 				label => '&login',
 			},
 			{
@@ -43,10 +26,9 @@ sub draw_item_of_users {
 				type  => 'password',
 			},
 			{
-				name   => 'id_role',
-				label  => 'Ğîëü',
-				type   => 'radio',
-				values => $data -> {roles},
+				name  => 'password2',
+				label => 'ïîâòîğ ïàğîëÿ',
+				type  => 'password',
 			},
 		]
 	)
@@ -63,7 +45,7 @@ sub draw_users {
 	
 		draw_table (
 		
-			['ÔÈÎ', 'Ğîëü', 'login', ''],
+			['ÔÈÎ', 'login'],
 
 			sub {
 					
@@ -71,24 +53,9 @@ sub draw_users {
 					href => "/?type=users&id=$$i{id}",
 				}, [
 					$i -> {label},
-					$i -> {role_label},
 					$i -> {login},
 				])
-				
-				.
-							
-				draw_row_buttons ({},
-					[
-						{
-							icon => 'delete',
-							label => 'Óäàëèòü',
-							href => "/?type=users&action=delete&id=$$i{id}",
-							confirm => "Óäàëèòü ïîëüçîâàòåëÿ $$i{label}?",
-							off => $i -> {id} == $_USER -> {id},
-						},
-					]
-				)
-				
+								
 			},
 			
 			$data -> {users},			

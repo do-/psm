@@ -1,6 +1,6 @@
 our $conf = {
 
-	page_title => 'Типовое Eludia-приложение',
+	page_title => 'Программы сильного мышления',
 	
 	portion => 15,
 	session_timeout => 30,
