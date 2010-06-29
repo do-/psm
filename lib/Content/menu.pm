@@ -15,12 +15,32 @@ sub select_menu_for_admin {
 			label => '&Пользователи',
 		},
 		{
-			name  => 'log',
-			label => 'Пр&отокол',
-		},		
+			name    => '_vocs',
+			label   => 'Справочники',
+			no_page => 1,
+			off   => !$_USER -> {can} -> {vocs},
+			items   => [
+				{
+					name  => 'voc_ages',
+					label => 'Возрастные категории',
+				},
+			],
+		},
 		{
-			name  => '_info',
-			label => '&Версии',
+			name    => '_admin',
+			label   => 'Система',
+			no_page => 1,
+			off   => !$_USER -> {can} -> {admin},
+			items   => [
+				{
+					name  => 'log',
+					label => 'Протокол',
+				},		
+				{
+					name  => '_info',
+					label => 'Версии',
+				},
+			],			
 		},
 	];
 
