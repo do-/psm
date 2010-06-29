@@ -36,6 +36,10 @@ sub draw_item_of_users {
 				type  => 'password',
 			},
 			{
+				name  => 'id_org',
+				empty => '',
+			},
+			{
 				name  => 'users_options',
 				label => 'Опции',
 				type  => 'checkboxes',
@@ -56,7 +60,11 @@ sub draw_users {
 	
 		draw_table (
 		
-			['ФИО', 'login'],
+			[
+				'ФИО',
+				'Филиал',
+				'login',
+			],
 
 			sub {
 					
@@ -64,6 +72,7 @@ sub draw_users {
 					href => "/?type=users&id=$$i{id}",
 				}, [
 					$i -> {label},
+					$i -> {org} -> {label},
 					$i -> {login},
 				])
 								
@@ -77,7 +86,7 @@ sub draw_users {
 		
 				top_toolbar => [
 				
-					{},
+					{keep_params => ['type']},
 					
 					{
 						icon => 'create',
@@ -89,6 +98,13 @@ sub draw_users {
 						type   => 'input_text',
 						label  => 'Искать',
 						name   => 'q',
+					},
+					
+					{
+						type   => 'input_select',
+						values => $data -> {orgs},
+						empty  => '[Все филиалы]',
+						name   => 'id_org',
 					},
 					
 					{

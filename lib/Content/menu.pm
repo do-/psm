@@ -6,6 +6,11 @@ sub select_menu_for_admin {
 
 	return [
 		{
+			name  => 'orgs',
+			label => '&Филиалы',
+			off   => !$_USER -> {can} -> {orgs},
+		},
+		{
 			name  => 'users',
 			label => '&Пользователи',
 		},

@@ -1,39 +1,27 @@
 ################################################################################
 
-sub select_users {
+sub select_users { # Список пользователей
+
+	sql (
 	
-	my $item = {
-		portion => $conf -> {portion},
-	};
+		add_vocabularies ({},
+			orgs => {},
+		),
+		
+		users => [
 	
-	my $filter = '';
-	my @params = ();
+			'id_org',
+			
+			['label LIKE %?%' => $_REQUEST {q}],
+			
+			[ LIMIT => 'start, 50'],
+		
+		],
+			
+		'orgs'
+		
+	);
 	
-	if ($_REQUEST {q}) {		
-		$filter .= ' AND users.label LIKE ?';
-		push @params, '%' . $_REQUEST {q} . '%';		
-	}
-
-	my $start = $_REQUEST {start} + 0;
-
-	($item -> {users}, $item -> {cnt}) = sql_select_all_cnt (<<EOS, @params, {fake => 'users'});
-		SELECT
-			users.*
-			, roles.label AS role_label
-		FROM
-			users
-			LEFT JOIN roles ON users.id_role = roles.id
-		WHERE
-			1=1
-			$filter
-		ORDER BY
-			users.label
-		LIMIT
-			$start, $$item{portion}
-EOS
-
-	return $item;
-
 }
 
 ################################################################################
