@@ -15,6 +15,7 @@ data => [
 	{name => 'users', fake => 0, label => 'Администрирование пользователей'},
 	{name => 'orgs',  fake => 0, label => 'Администрирование филиалов'},
 	{name => 'vocs',  fake => 0, label => 'Администрирование справочников'},
+	{name => 'teach', fake => 0, label => 'Преподавание'},
 	{name => 'move',  fake => 0, label => 'Смена филиала'},
 	{name => 'admin', fake => 0, label => 'Системные функции'},
 ],

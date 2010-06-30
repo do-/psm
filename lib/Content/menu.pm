@@ -28,6 +28,16 @@ sub select_menu_for_admin {
 					name  => 'voc_res_types',
 					label => 'Типы ресурсов',
 				},
+				{
+					name  => '_resources',
+					label => 'Ресурсы',
+					items => [					
+						map {{
+							label => $_ -> {label},
+							href  => "/?type=resources&id_voc_res_type=$_->{id}",
+						}} @{sql_select_all ('SELECT * FROM voc_res_types WHERE fake = 0 ORDER BY label')}				
+					]
+				},
 			],
 		},
 		{

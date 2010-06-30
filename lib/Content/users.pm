@@ -88,7 +88,7 @@ sub do_update_users {
 	}
 	
 	do_update_DEFAULT ();
-	
+		
 	wish (table_data =>
 	
 		[map {{	fake => 0, id_option => $_ }} get_ids ('users_options')], {
@@ -101,6 +101,28 @@ sub do_update_users {
 		}
 		
 	);
+
+	my $user = sql ('users' => $_REQUEST {id});
+
+	sql (users_options => [[id_user => $user -> {id}]], 'options(name)', sub {$user -> {can} -> {$i -> {option} -> {name}} = 1});
+
+	if ($user -> {can} -> {teach}) {
+	
+		sql_select_id (resources => {
+		
+			id_voc_res_type => 1,
+			id_user         => $user -> {id},
+			-label          => $user -> {label},
+			-fake           => 0,
+			
+		}, ['id_user']);
+	
+	}
+	else {
+	
+		sql_do ('UPDATE resources SET fake = -1 WHERE id_user = ?', $user -> {id});
+	
+	}
 
 }
 
