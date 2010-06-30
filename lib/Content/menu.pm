@@ -31,6 +31,21 @@ sub select_menu_for_admin {
 			],
 		},
 		{
+			name    => '_move',
+			label   => 'Смена филиала',
+			no_page => 1,
+			off   => !$_USER -> {can} -> {move},
+			items   => [
+			
+				map {{
+					label  => $_ -> {label},
+					href   => "/?type=users&action=move&id_org=$_->{id}",
+					target => 'invisible',
+				}} grep {$_ -> {id} != $_USER -> {id_org}} ({id => 0, label => '[Все филиалы]'}, @{sql_select_all ('SELECT * FROM orgs WHERE fake = 0 ORDER BY label')})
+			
+			],			
+		},
+		{
 			name    => '_admin',
 			label   => 'Система',
 			no_page => 1,
