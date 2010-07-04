@@ -13,6 +13,15 @@ sub select_menu_for_admin {
 		{
 			name  => 'users',
 			label => '&Пользователи',
+			off   => !$_USER -> {can} -> {users},
+		},
+		{
+			name  => 'colls',
+			label => '&Клиенты',
+			off   =>
+				!$_USER -> {can} -> {reception}
+				|| !$_USER -> {id_org}
+			,
 		},
 		{
 			name    => '_vocs',
