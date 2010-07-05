@@ -1,6 +1,6 @@
 our $conf = {
 
-	page_title => 'Программы сильного мышления',
+	page_title => $preconf -> {page_title},
 	
 	portion => 15,
 	session_timeout => 30,
