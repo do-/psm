@@ -31,6 +31,11 @@ sub draw_item_of_clients {
 				max_len => 255,
 			},
 			
+			{
+				name    => 'id_voc_role',
+				empty   => '[Выберите степень родства]',
+			},
+			
 			'dt_birth',
 
 		],

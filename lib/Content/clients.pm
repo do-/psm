@@ -6,6 +6,8 @@ sub do_update_clients {
 
 	$_REQUEST {_label} or croak "#_label#:Вы забыли ввести ФИО";
 	
+	$_REQUEST {_id_voc_role} or croak "#_id_voc_role#:Вы забыли выбрать степень родства";
+	
 	my (@dt_birth) = vld_date ('dt_birth');
 	
 	Date::Calc::Delta_Days (@dt_birth, Date::Calc::Today ()) > 0 or die "#_dt_birth#:дата рождения не может находиться в будущем";

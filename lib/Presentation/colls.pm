@@ -68,6 +68,7 @@ sub draw_item_of_colls {
 				
 				$i -> {label},
 				$i -> {dt_birth},
+				$i -> {voc_role} -> {label},
 				
 			]),
 		

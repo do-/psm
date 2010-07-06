@@ -34,6 +34,10 @@ sub select_menu_for_admin {
 					label => 'Возрастные категории',
 				},
 				{
+					name  => 'voc_roles',
+					label => 'Степени родства',
+				},
+				{
 					name  => 'voc_res_types',
 					label => 'Типы ресурсов',
 				},
