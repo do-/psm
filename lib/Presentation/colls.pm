@@ -31,11 +31,67 @@ sub draw_item_of_colls {
 				type    => 'static',
 			},
 			{
+				name    => 'dt',
+				label   => 'Дата регистрации',
+				type    => 'static',
+				off     => !$data -> {dt},
+			},
+			{
 				name    => 'label',
 				label   => 'Наименование',
 				size    => 40,
 				max_len => 255,
 			},
+			{
+				name    => 'address',
+				label   => 'Адрес',
+				type    => 'static',
+				off     => !$_REQUEST {__read_only},
+			},
+			{
+				label   => 'Адрес',
+				type    => 'hgroup',
+				off     => $_REQUEST {__read_only},
+				items   => [
+				
+					{
+						name     => 'street',
+						size     => 30,
+						max_len  => 255,
+						label    => '',
+					},
+					{
+						name     => 'building',
+						size     => 5,
+						max_len  => 255,
+						label    => 'д.',
+						no_colon => 1,
+					},
+					{
+						name     => 'corpus',
+						size     => 5,
+						max_len  => 255,
+						label    => 'корп.',
+						no_colon => 1,
+					},
+					{
+						name     => 'apartment',
+						size     => 5,
+						max_len  => 255,
+						label    => 'кв.',
+						no_colon => 1,
+					},
+				
+				],
+
+			},
+			
+			{
+				name    => 'phone',
+				label   => 'Телефон',
+				size    => 15,
+			},
+
 			{
 				name    => 'no',
 				label   => 'Номер карты',
@@ -135,9 +191,13 @@ sub draw_colls {
 
 		draw_table (
 
-#			[
-#				'Наименование',
-#			],
+			[
+				'Карта',
+				'Наименование',
+				'Тип',
+				'Адрес',
+				'Телефон',
+			],
 
 			sub {
 
@@ -150,6 +210,8 @@ sub draw_colls {
 					$i -> {no},
 					$i -> {label},
 					$i -> {voc_coll_type} -> {label},
+					$i -> {address},
+					$i -> {phone},
 
 				])
 

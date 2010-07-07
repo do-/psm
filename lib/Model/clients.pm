@@ -15,6 +15,7 @@ columns => {
 
 keys => {
 	id_org => 'id_org, label',
+	label  => 'label',
 },
 
 

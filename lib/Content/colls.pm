@@ -3,10 +3,34 @@
 
 sub do_update_colls {
 
-	$_REQUEST {_label} or croak "#_label#:Вы забыли ввести наименование коллективного клиента";
-	$_REQUEST {_no}    or croak "#_no#:Вы забыли ввести номер карты";
+	$_REQUEST {_label}     or die "#_label#:Вы забыли ввести наименование коллективного клиента";
+
+	$_REQUEST {_street}    or die "#_street#:Вы забыли ввести название улицы (площади, переулка...)";
+	$_REQUEST {_building}  or die "#_building#:Вы забыли ввести номер дома";
+	$_REQUEST {_apartment} or die "#_apartment#:Вы забыли ввести номер квартиры (офиса)";
+	
+	$_REQUEST {_address}  = "$_REQUEST{_street}, д.$_REQUEST{_building}";
+	$_REQUEST {_address} .= ", корп. $_REQUEST{_corpus}" if $_REQUEST {_corpus};
+	$_REQUEST {_address} .= ", кв. $_REQUEST{_apartment}";
+
+	if ($_REQUEST {_phone}) {
+	
+		$_REQUEST {_phone} =~ s{[\(\)\+\-\s]}{}g;
+		
+		$_REQUEST {_phone} =~ /^\d{7,12}$/ or die "#_phone#:Некорректный номер телефона";
+		
+		$_REQUEST {_phone} =~ s{(\d\d\d)?(\d\d\d)(\d\d)(\d\d)$}{ ($1) $2-$3-$4};
+
+		$_REQUEST {_phone} =~ s{\(\)}{};
+		$_REQUEST {_phone} =~ s{^\s+}{};
+	
+	}
+
+	$_REQUEST {_no}        or die "#_no#:Вы забыли ввести номер карты";
 	
 	do_update_DEFAULT ();
+	
+	sql_do ('UPDATE colls SET dt = NOW() WHERE id = ? AND dt IS NULL', $_REQUEST {id});
 
 }
 
@@ -27,9 +51,7 @@ sub get_item_of_colls {
 	sql ($data, clients => [
 	
 		[ id_coll => $data -> {id} ],
-		
-		[ LIMIT   => 'start, 15'],
-		
+				
 	], 'voc_roles');
 	
 	my @today = Date::Calc::Today ();

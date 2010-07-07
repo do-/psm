@@ -16,12 +16,22 @@ sub select_menu_for_admin {
 			off   => !$_USER -> {can} -> {users},
 		},
 		{
-			name  => 'colls',
+			name  => 'clients',
 			label => '&Клиенты',
 			off   =>
 				!$_USER -> {can} -> {reception}
 				|| !$_USER -> {id_org}
 			,
+			
+			items => [
+			
+				{
+					name  => 'colls',
+					label => 'Семьи и фирмы',
+				},
+			
+			],
+			
 		},
 		{
 			name    => '_vocs',
