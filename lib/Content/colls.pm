@@ -31,6 +31,14 @@ sub get_item_of_colls {
 		[ LIMIT   => 'start, 15'],
 		
 	], 'voc_roles');
+	
+	my @today = Date::Calc::Today ();
+	
+	foreach my $i (@{$data -> {clients}}) {
+	
+		($i -> {age}) = Date::Calc::Delta_YMD (dt_y_m_d ($i -> {dt_birth}), @today);
+	
+	}
 
 	return $data;
 

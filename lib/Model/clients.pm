@@ -7,6 +7,8 @@ columns => {
 	id_voc_role	=> 'select(voc_roles)',	# Степень родства
 
 	label   	=> 'string',         	# ФИО
+	mail    	=> 'string',         	# e-mail	
+	phone   	=> 'string',         	# Мобильный телефон
 	dt_birth    => 'date',           	# Дата рождения
 
 },

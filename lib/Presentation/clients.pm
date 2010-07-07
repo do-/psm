@@ -24,6 +24,7 @@ sub draw_item_of_clients {
 		$data,
 		
 		[
+
 			{
 				name    => 'label',
 				label   => 'ФИО',
@@ -36,7 +37,24 @@ sub draw_item_of_clients {
 				empty   => '[Выберите степень родства]',
 			},
 			
-			'dt_birth',
+			{
+				name    => 'dt_birth',
+				label   => 'Дата рождения',
+			},
+
+			{
+				name    => 'phone',
+				label   => 'Мобильный телефон',
+				size    => 15,
+			},
+
+			{
+				name    => 'mail',
+				label   => 'E-mail',
+				size    => 80,
+				max_len => 255,
+				href    => "mailto:$data->{mail}",
+			},
 
 		],
 

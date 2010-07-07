@@ -10,6 +10,24 @@ sub do_update_clients {
 	
 	my (@dt_birth) = vld_date ('dt_birth');
 	
+	if ($_REQUEST {_phone}) {
+	
+		$_REQUEST {_phone} =~ s{[\(\)\+\-\s]}{}g;
+		
+		$_REQUEST {_phone} =~ /^\d{7,12}$/ or die "#_phone#:Некорректный номер телефона";
+		
+		$_REQUEST {_phone} =~ s{(\d\d\d)?(\d\d\d)(\d\d)(\d\d)$}{ ($1) $2-$3-$4};
+
+		$_REQUEST {_phone} =~ s{^\s+}{};
+	
+	}
+	
+	if ($_REQUEST {_mail}) {
+	
+		$_REQUEST {_mail} =~ /^[\w\.]+\@[\w\.]+\.[a-z]{2,3}$/ or die "#_mail#:некорректный E-mail";
+	
+	}
+	
 	Date::Calc::Delta_Days (@dt_birth, Date::Calc::Today ()) > 0 or die "#_dt_birth#:дата рождения не может находиться в будущем";
 
 	do_update_DEFAULT ();

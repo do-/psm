@@ -57,6 +57,16 @@ sub draw_item_of_colls {
 	.
 
 	draw_table (
+		
+		[
+			'ФИО',
+			'Роль',
+			'ДР',
+			'Возраст',
+			'Моб.',
+			'E-mail',
+			
+		],
 
 		sub {
 		
@@ -67,8 +77,17 @@ sub draw_item_of_colls {
 			},[
 				
 				$i -> {label},
-				$i -> {dt_birth},
 				$i -> {voc_role} -> {label},
+				$i -> {dt_birth},
+				{
+					label   => $i -> {age},
+					picture => '###',
+				},
+				$i -> {phone},
+				{
+					label => $i -> {mail},
+					href  => "mailto:$i->{mail}",
+				}
 				
 			]),
 		
